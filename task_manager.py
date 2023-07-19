@@ -1,4 +1,9 @@
 # task_manager.py
+import logging
+
+# Set the log format
+log_format = '%(asctime)s - %(levelname)s - %(message)s'
+logging.basicConfig(level=logging.DEBUG, format=log_format)
 
 class Task:
     def __init__(self, title, due_date):
@@ -31,6 +36,7 @@ class TaskManager:
             print("Invalid task index.")
 
 if __name__ == "__main__":
+    logging.info("Starting Task Manager Application.")
     task_manager = TaskManager()
 
     while True:
