@@ -1,9 +1,7 @@
-# task_manager.py
 import logging
 
-# Set the log format
-log_format = '%(asctime)s - %(levelname)s - %(message)s'
-logging.basicConfig(level=logging.DEBUG, format=log_format)
+logging.basicConfig(filename='app.log', level=logging.DEBUG,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
 
 class Task:
     def __init__(self, title, due_date):
@@ -21,22 +19,27 @@ class TaskManager:
     def add_task(self, title, due_date):
         task = Task(title, due_date)
         self.tasks.append(task)
+        logging.info(f"Task '{title}' added with due date '{due_date}'.")
 
     def list_tasks(self):
         for index, task in enumerate(self.tasks, 1):
             status = "Completed" if task.completed else "Not Completed"
             print(f"{index}. {task.title} (Due: {task.due_date}) - {status}")
+            logging.debug(f"{index}. {task.title} (Due: {task.due_date}) - {status}")
 
     def mark_task_completed(self, task_index):
         if 1 <= task_index <= len(self.tasks):
             task = self.tasks[task_index - 1]
             task.mark_completed()
             print(f"Task '{task.title}' marked as completed.")
+            logging.info(f"Task '{task.title}' marked as completed.")
+
         else:
             print("Invalid task index.")
+            logging.warning("Invalid task index provided.")
 
 if __name__ == "__main__":
-    logging.info("Starting Task Manager Application.")
+
     task_manager = TaskManager()
 
     while True:
